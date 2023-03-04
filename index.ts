@@ -9,6 +9,7 @@ const PORT = 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
+
 //endpoint to get all users
 //http :3000/users
 app.get("/users", async (req, res) => {
