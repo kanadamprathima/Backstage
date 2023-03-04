@@ -5,18 +5,19 @@ import cors from "cors";
 
 const prisma = new PrismaClient();
 const app = express();
-const PORT = 3000;
+const PORT = 4000;
 
 app.use(cors());
 app.use(bodyParser.json());
 
 //endpoint to get all users
-//http :3000/users
+//http :4000/users
 app.get("/users", async (req, res) => {
   const users = await prisma.user.findMany({ include: { todos: true } });
   res.json(users);
 });
 //endpoint for specific user details
+//http :4000/users/1
 app.get("/users/:id", async (req, res) => {
   const { id } = req.params;
   const user = await prisma.user.findUnique({
@@ -29,6 +30,7 @@ app.get("/users/:id", async (req, res) => {
   res.json(user);
 });
 // Get all todos for a user
+// http :4000/users/1/todos
 app.get("/users/:userId/todos", async (req: Request, res: Response) => {
   const { userId } = req.params;
 
@@ -46,6 +48,7 @@ app.get("/users/:userId/todos", async (req: Request, res: Response) => {
   }
 });
 // Create a new todo for a user
+// http :4000/users/1/todos title='testing endpoint' description='worked'
 app.post("/users/:userId/todos", async (req: Request, res: Response) => {
   const { userId } = req.params;
   const { title, description } = req.body;
