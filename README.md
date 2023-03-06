@@ -10,6 +10,7 @@
 - Express.ts
 - Prisma ORM
 - PostgreSQL
+- Typescript
 
 # Requirements
 
