@@ -2,7 +2,7 @@
 
 # Todo App
 
-- This is a simple Todo app built with Node.js and Prisma ORM. The app allows users to create, read, update, and delete tasks.
+- This is a Todo app built with Typescript, Node.js and Prisma ORM. The app allows users to create, read, update, and delete tasks.
 
 # Technologies Used
 
