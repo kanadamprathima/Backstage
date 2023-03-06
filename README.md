@@ -20,7 +20,7 @@
 
 1. Clone this Repository.
 
-- git clone git@github.com:kanadamprathima/Backstage.git
+- git clone https://github.com/kanadamprathima/Backstage.git
 
 2. Install dependencies:
 
