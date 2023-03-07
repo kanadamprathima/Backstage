@@ -25,7 +25,7 @@
 
 2. Install dependencies:
 
-- cd todo-app
+- cd yourappname.
 - npm install
 
 3. Set up your database connection in the .env file:
