@@ -1,8 +1,8 @@
-# Backstage
+# Backstage Server
 
 # Todo App
 
-- This is a simple Todo app built with Node.js and Prisma ORM. The app allows users to create, read, update, and delete tasks.
+- This is a Todo app built with Typescript, Node.js and Prisma ORM. The app allows users to create, read, update, and delete tasks.
 
 # Technologies Used
 
@@ -10,7 +10,6 @@
 - Express.ts
 - Prisma ORM
 - PostgreSQL
-- TypeScript
 
 # Requirements
 
@@ -25,7 +24,7 @@
 
 2. Install dependencies:
 
-- cd todo-app
+- cd yourappname.
 - npm install
 
 3. Set up your database connection in the .env file:
