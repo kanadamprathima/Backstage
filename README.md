@@ -10,6 +10,8 @@
 - Express.ts
 - Prisma ORM
 - PostgreSQL
+- bcrypt
+- jwt
 
 # Requirements
 
