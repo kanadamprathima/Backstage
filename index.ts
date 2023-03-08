@@ -145,6 +145,7 @@ app.post("/users/:userId/todos", async (req: Request, res: Response) => {
     });
 
     res.json(todo);
+    // res.sendStatus(201).send(todo);
   } catch (error) {
     console.error(error);
     res.status(500).send("Something went wrong");
