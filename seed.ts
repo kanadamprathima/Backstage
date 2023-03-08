@@ -1,11 +1,12 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
 const prisma = new PrismaClient();
 const main = async () => {
   const user1 = await prisma.user.create({
     data: {
       name: "Prathima backend",
       email: "backend@backstage.com",
-      password: "password1",
+      password: bcrypt.hashSync("test1", 10),
       todos: {
         create: [
           {
@@ -35,7 +36,7 @@ const main = async () => {
     data: {
       name: "Forntend",
       email: "frontend@backstage.com",
-      password: "password1",
+      password: bcrypt.hashSync("test1", 10),
       todos: {
         create: [
           {
@@ -63,7 +64,7 @@ const main = async () => {
     data: {
       name: "tester",
       email: "tester@backstage.com",
-      password: "password1",
+      password: bcrypt.hashSync("test1", 10),
       todos: {
         create: [
           {

@@ -1,31 +1,45 @@
 import { PrismaClient } from "@prisma/client";
-import express, { request, Request, Response } from "express";
+import express, { Request, Response } from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();
 const app = express();
 const PORT = 4000;
+const jwtSecret =
+  process.env.JWT_SECRET || "e9rp^&^*&@9sejg)DSUA)jpfds8394jdsfn,m";
 
 app.use(cors({ origin: "*" }));
 
 app.use(bodyParser.json());
+
+function toJWT(data: any) {
+  return jwt.sign(data, jwtSecret, { expiresIn: "2h" });
+}
 
 //endpoint for login
 app.post("/login", async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     console.log(req.body);
+    if (!email || !password) {
+      return res
+        .status(400)
+        .send({ message: "Please provide both email and password" });
+    }
     const reqUser = await prisma.user.findUnique({ where: { email } });
-    console.log(reqUser);
-    if (!reqUser) {
-      return res.status(400).send("User with this email not found");
+
+    console.log("this is the user", reqUser);
+    if (!reqUser || !bcrypt.compareSync(password, reqUser.password)) {
+      return res.status(400).send({
+        message: "User with that email not found or password incorrect",
+      });
     }
-    if (password !== reqUser.password) {
-      return res.status(400).send("Invalid password");
-    } else {
-      return res.status(200).send("login successfully");
-    }
+    const token = toJWT({ userId: reqUser.id });
+
+    return res.status(200).send({ token, reqUser });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Server error" });
@@ -49,12 +63,35 @@ app.post("/signup", async (req: Request, res: Response) => {
     res.status(500).json({ message: "Error while user creation" });
   }
 });
-
+export interface Todo {
+  id: number;
+  title: string;
+  description: string;
+}
 //endpoint to get all users
 //http :4000/users
 app.get("/users", async (req, res) => {
   const users = await prisma.user.findMany({ include: { todos: true } });
   res.json(users);
+});
+//get all todos
+app.get("/todos", async (req: Request, res: Response) => {
+  const alltodos = await prisma.todo.findMany();
+  res.json(alltodos);
+});
+//endpoint for posting new todo for a default user 1
+
+app.post("/todos", async (req: Request, res: Response) => {
+  const { title, description } = req.body;
+
+  const newtodo = await prisma.todo.create({
+    data: {
+      title,
+      description,
+      userId: 1,
+    },
+  });
+  res.json(newtodo);
 });
 
 //endpoint for specific user details
